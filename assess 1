@@ -1,0 +1,55 @@
+# Import necessary libraries
+import requests
+
+# Define constants for API key and base URL
+API_KEY = "b8caf7a5b9f6706b3ebc1a7939e9fd89"
+BASE_URL = 'http://api.openweathermap.org/data/2.5/weather'
+
+# Function to get weather data for a given location
+def get_weather_data(location):
+    # Construct request URL with location and API key
+    request_url = f"{BASE_URL}?q={location}&appid={API_KEY}&units=metric"
+    
+    # Send request to weather API
+    response = requests.get(request_url)
+    
+    # Check if the response is successful (status code 200)
+    if response.status_code == 200:
+        # Parse JSON response
+        data = response.json()
+        return data
+    else:
+        return None
+
+# Function to display weather information
+def display_weather(data):
+    if data:
+        # Extract relevant weather information from the response
+        temp = data['main']['temp']
+        weather_condition = data['weather'][0]['description']
+        humidity = data['main']['humidity']
+        wind_speed = data['wind']['speed']
+        
+        # Print the weather information
+        print(f"Temperature: {temp}°C")
+        print(f"Weather Condition: {weather_condition}")
+        print(f"Humidity: {humidity}%")
+        print(f"Wind Speed: {wind_speed} m/s")
+    else:
+        print("Error: Unable to fetch weather data")
+
+# Main function to run the program
+def main():
+    # Prompt user to input location (city name or coordinates)
+    location = input("Enter the city name: ")
+    
+    # Get weather data for the input location
+    weather_data = get_weather_data(location)
+    
+    # Display the fetched weather data
+    display_weather(weather_data)
+
+# Check if the script is run directly (and not imported as a module)
+if __name__ == "__main__":
+    main()
+

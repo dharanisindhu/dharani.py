@@ -1,0 +1,52 @@
+# Define classes for Product, Warehouse, and Inventory
+
+class Product:
+    def __init__(self, id, name, price):
+        self.id = id
+        self.name = name
+        self.price = price
+
+class Warehouse:
+    def __init__(self, id, location):
+        self.id = id
+        self.location = location
+
+class Inventory:
+    def __init__(self, product, warehouse, stock_level):
+        self.product = product
+        self.warehouse = warehouse
+        self.stock_level = stock_level
+
+# Initialize some products and warehouses
+product1 = Product(1, "Keyboard", 50.0)
+product2 = Product(2, "Mouse", 20.0)
+
+warehouse1 = Warehouse(1, "Main Warehouse")
+warehouse2 = Warehouse(2, "Secondary Warehouse")
+
+# Create initial inventory entries
+inventory1 = Inventory(product1, warehouse1, 100)
+inventory2 = Inventory(product2, warehouse1, 150)
+inventory3 = Inventory(product1, warehouse2, 50)
+
+# Function to check stock levels and reorder if necessary
+def check_stock_levels(inventory_list, threshold):
+    low_stock_products = []
+    for item in inventory_list:
+        if item.stock_level < threshold:
+            low_stock_products.append(item)
+            # Implement alert or reorder logic here
+    return low_stock_products
+
+# Sample usage:
+inventory_list = [inventory1, inventory2, inventory3]
+low_stock = check_stock_levels(inventory_list, 50)
+
+# Generate report functions
+def generate_inventory_report(inventory_list):
+    print("Inventory Report:")
+    for item in inventory_list:
+        print(f"Product: {item.product.name}, Warehouse: {item.warehouse.location}, Stock Level: {item.stock_level}")
+
+# Sample usage:
+generate_inventory_report(inventory_list)

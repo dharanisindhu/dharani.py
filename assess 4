@@ -1,0 +1,39 @@
+import requests
+
+# Function to fetch COVID-19 statistics from API
+def fetch_covid_stats(region):
+    url = f"https://disease.sh/v3/covid-19/countries/{region}"  
+    response = requests.get(url)
+    
+    if response.status_code == 200:
+        data = response.json()
+        return data
+    else:
+        print(f"Failed to fetch data for {region}. Status code: {response.status_code}")
+        return None
+
+# Function to display COVID-19 statistics
+def display_stats(stats):
+    if stats:
+        country = stats.get('country')
+        cases = stats.get('cases')
+        deaths = stats.get('deaths')
+        recovered = stats.get('recovered')
+        
+        print(f"COVID-19 Statistics for {country}:")
+        print(f"Cases: {cases}")
+        print(f"Deaths: {deaths}")
+        print(f"Recovered: {recovered}")
+    else:
+        print("No data available.")
+
+# Main program loop
+def main():
+    region = input("Enter a country name to fetch COVID-19 statistics: ")
+    
+    stats = fetch_covid_stats(region)
+    display_stats(stats)
+
+# Entry point of the program
+if __name__ == "__main__":
+    main()
